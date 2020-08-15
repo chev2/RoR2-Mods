@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>RoR2_UncappedConvergence</RootNamespace>
+    <AssemblyName>UncappedConvergence</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
