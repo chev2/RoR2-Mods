@@ -10,14 +10,13 @@ namespace ChevRoR
     [BepInPlugin("com.ChevRoR.AlteredSacrificeArtifactRate", "Sacrifice Artifact Drop Rate Changer", "1.0.0")]
     public class AlteredSacrificeArtifactRate : BaseUnityPlugin
     {
-        private static ConfigFile ASARConfig = new ConfigFile(Paths.ConfigPath + "\\SacrificeArtifactRate.cfg", true);
         public static ConfigEntry<bool> ModEnabled { get; set; }
         public static ConfigEntry<float> DropRateModifier { get; set; }
 
         public void Awake()
         {
-            ModEnabled = Config.Bind<bool>("Main", "ModEnabled", true, "Changes whether or not the mod is enabled.");
-            DropRateModifier = Config.Bind<float>("Main", "SacrificeArtifactDropRate", 5f, "The modifier used for drop rate. 1 is 1% drop rate, 100 is 100%, etc.");
+            ModEnabled = Config.Bind("Main", "ModEnabled", true, "Changes whether or not the mod is enabled.");
+            DropRateModifier = Config.Bind("Main", "SacrificeArtifactDropRate", 5f, "The modifier used for drop rate. 1 is 1% drop rate, 100 is 100%, etc.");
 
             if (!ModEnabled.Value)
                 return;
