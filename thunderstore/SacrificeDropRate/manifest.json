@@ -1,0 +1,10 @@
+{
+    "name": "SacrificeArtifactRateChanger",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/chev2/RoR2-Mods",
+    "description": "Lets you change the rate at which items drop from enemies when using the sacrifice artifact.",
+    "dependencies": [
+        "bbepis-BepInExPack-5.3.1",
+        "tristanmcpherson-R2API-2.4.29"
+    ]
+}

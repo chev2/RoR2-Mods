@@ -1,0 +1,10 @@
+{
+    "name": "UncappedConvergence",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/chev2/RoR2-Mods",
+    "description": "Makes Focused Convergence have no limit instead of capping at 3.",
+    "dependencies": [
+        "bbepis-BepInExPack-5.3.1",
+        "tristanmcpherson-R2API-2.4.29"
+    ]
+}
