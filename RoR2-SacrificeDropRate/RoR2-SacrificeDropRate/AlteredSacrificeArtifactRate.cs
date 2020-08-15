@@ -1,10 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using RoR2;
-using UnityEngine;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using System.Runtime.CompilerServices;
 
 namespace ChevRoR
 {
