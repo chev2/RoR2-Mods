@@ -6,10 +6,24 @@ Configuration
 ------------
 The mod config file can be found under `BepInEx/config/com.ChevRoR.AlteredSacrificeArtifactRate.cfg`.
 
-**ModEnabled (boolean) - Default: true** - Enables/disables the entire mod.
+**SacrificeArtifactDropRate** - The percent chance that a monster will drop an item on death. Default is 5, which is a 5% chance.
 
-**SacrificeArtifactDropRate (float) Default: 5** - The percent chance that a monster will drop an item on death. Default is 5, which is a 5% chance.
+**CustomWeightsEnabled** - If custom weights are enabled. Weights change how often some tiers of items will drop versus others.
+
+**Tier1Weight** - Weight of Tier 1 (white) items.
+
+**Tier2Weight** - Weight of Tier 2 (lime) items.
+
+**Tier3Weight** - Weight of Tier 3 (red) items.
+
+**EquipmentWeight** - Weight of Equipment (orange) items.
+
+**LunarWeight** - Weight of Lunar (cyan) items.
+
+**BossWeight** - Weight of Boss (yellow) items.
+
 
 Changelog
 ------------
+1.1.0 - Added the ability to use custom weights for items in the config. Removed ModEnabled as it caused issues.
 1.0.0 - Initial mod
