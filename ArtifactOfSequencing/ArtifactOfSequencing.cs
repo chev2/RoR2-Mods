@@ -53,9 +53,8 @@ namespace Chev
             // This uses the ArtifactAPI submodule in R2API
             ArtifactAPI.Add(Artifact);
 
-            // On stage start event
+            // On run start event
             // This is when we add our items
-            //Stage.onStageStartGlobal += AddBeginningItems;
             Run.onRunStartGlobal += AddBeginningItems;
 
             Logger.LogMessage("Loaded mod com.Chev.ArtifactOfSequencing");
@@ -112,6 +111,10 @@ namespace Chev
 
         public void AddBeginningItems(Run run)
         {
+            // If our artifact is not enabled
+            if (!RunArtifactManager.instance.IsArtifactEnabled(Artifact.artifactIndex))
+                return;
+
             CharacterMaster master = PlayerCharacterMasterController.instances[0].master;
 
             if (master)
