@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="artifactSequencingDisabled.svg" />
+    <None Remove="artifactSequencingEnabled.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>H:\SteamLibrary\steamapps\common\Risk of Rain 2\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
