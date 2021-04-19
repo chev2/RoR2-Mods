@@ -1,2 +1,5 @@
+1.0.1 --
+- Fixed an error in RandomItem() preventing starting items from properly spawning
+
 1.0.0 --
 - Initial mod release

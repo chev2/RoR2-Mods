@@ -1,6 +1,6 @@
 {
     "name": "ArtifactOfSequencing",
-    "version_number": "1.0.0",
+    "version_number": "1.0.1",
     "website_url": "https://github.com/chev2/RoR2-Mods",
     "description": "Spawn with a starting item of every tier. Any picked up items will be converted to the starting item of the same tier.",
     "dependencies": [

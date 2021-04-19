@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Chev
 {
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.Chev.ArtifactOfSequencing", "Artifact of Sequencing", "1.0.0")]
+    [BepInPlugin("com.Chev.ArtifactOfSequencing", "Artifact of Sequencing", "1.0.1")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [R2APISubmoduleDependency(nameof(ArtifactAPI))]
     public class ArtifactOfSequencingMod : BaseUnityPlugin
@@ -84,10 +84,9 @@ namespace Chev
         private ItemDef RandomItem(ItemTier tier)
         {
             // Get all available items by tier
-            ItemIndex[] itemIndexesOfTier = Run.instance.availableItems.Where(item => ItemCatalog.GetItemDef(item).tier == tier).ToArray();
-
-            // Get ItemDefs from item indexes
-            ItemDef[] itemsOfTier = itemIndexesOfTier.Select(item => ItemCatalog.GetItemDef(item)).ToArray();
+            ItemDef[] itemsOfTier = (from item in ItemCatalog.allItems
+                                     where Run.instance.IsItemAvailable(item) && ItemCatalog.GetItemDef(item).tier == tier
+                                     select ItemCatalog.GetItemDef(item)).ToArray();
 
             return itemsOfTier[_random.Next(0, itemsOfTier.Length)];
         }
