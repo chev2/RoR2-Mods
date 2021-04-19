@@ -45,7 +45,7 @@ namespace Chev
 
             // Artifact info
             Artifact.nameToken = "Artifact of Sequencing";
-            Artifact.descriptionToken = "Spawn with a single item of every tier. Any picked up items will be converted to the starting item of the same tier.";
+            Artifact.descriptionToken = "Spawn with a starting item of every tier. Any picked up items will be converted to the starting item of the same tier.";
             Artifact.smallIconSelectedSprite = LoadIcon(ArtifactOfSequencing.Properties.Resources.texArtifactSequencingEnabled);
             Artifact.smallIconDeselectedSprite = LoadIcon(ArtifactOfSequencing.Properties.Resources.texArtifactSequencingDisabled);
 
@@ -83,9 +83,11 @@ namespace Chev
         /// <returns></returns>
         private ItemDef RandomItem(ItemTier tier)
         {
-            ItemDef[] itemDefs = typeof(ItemCatalog).GetFieldValue<ItemDef[]>("itemDefs");
+            // Get all available items by tier
+            ItemIndex[] itemIndexesOfTier = Run.instance.availableItems.Where(item => ItemCatalog.GetItemDef(item).tier == tier).ToArray();
 
-            ItemDef[] itemsOfTier = itemDefs.Where(item => item.tier == tier).ToArray();
+            // Get ItemDefs from item indexes
+            ItemDef[] itemsOfTier = itemIndexesOfTier.Select(item => ItemCatalog.GetItemDef(item)).ToArray();
 
             return itemsOfTier[_random.Next(0, itemsOfTier.Length)];
         }
