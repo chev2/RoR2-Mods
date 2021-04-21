@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Chev
 {
     [BepInDependency("com.bepis.r2api")]
-    [BepInPlugin("com.Chev.ArtifactOfSequencing", "Artifact of Sequencing", "1.0.1")]
+    [BepInPlugin("com.Chev.ArtifactOfSequencing", "Artifact of Sequencing", "1.0.2")]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [R2APISubmoduleDependency(nameof(ArtifactAPI))]
     public class ArtifactOfSequencingMod : BaseUnityPlugin
@@ -56,8 +56,6 @@ namespace Chev
             // On run start event
             // This is when we add our items
             Run.onRunStartGlobal += AddBeginningItems;
-
-            Logger.LogMessage("Loaded mod com.Chev.ArtifactOfSequencing");
         }
 
         /// <summary>
@@ -110,45 +108,57 @@ namespace Chev
             }
         }
 
+        /// <summary>
+        /// Converts any potential items to their corresponding starter item
+        /// </summary>
+        private void ConvertPotentialItems(Inventory inv, ItemIndex itemIndex, int count)
+        {
+            ItemDef starterItemToCompare = ItemFromTier(ItemCatalog.GetItemDef(itemIndex).tier);
+
+            // If they are different items
+            if (starterItemToCompare != null && starterItemToCompare.itemIndex != itemIndex)
+            {
+                int itemCount = inv.GetItemCount(itemIndex);
+
+                inv.RemoveItem(itemIndex, itemCount);
+                inv.GiveItem(starterItemToCompare, itemCount);
+            }
+        }
+
         public void AddBeginningItems(Run run)
         {
-            // If our artifact is not enabled
-            if (!RunArtifactManager.instance.IsArtifactEnabled(Artifact.artifactIndex))
-                return;
-
-            CharacterMaster master = PlayerCharacterMasterController.instances[0].master;
-
-            if (master)
+            // If our artifact is enabled
+            if (RunArtifactManager.instance.IsArtifactEnabled(Artifact.artifactIndex))
             {
-                // Set starting items
-                CommonItem = RandomItem(ItemTier.Tier1);
-                UncommonItem = RandomItem(ItemTier.Tier2);
-                LegendaryItem = RandomItem(ItemTier.Tier3);
-                BossItem = RandomItem(ItemTier.Boss);
-                LunarItem = RandomItem(ItemTier.Lunar);
-
-                // Give the starting items
-                master.inventory.GiveItem(CommonItem, CommonItemCount.Value);
-                master.inventory.GiveItem(UncommonItem, UncommonItemCount.Value);
-                master.inventory.GiveItem(LegendaryItem, LegendaryItemCount.Value);
-                master.inventory.GiveItem(BossItem, BossItemCount.Value);
-                master.inventory.GiveItem(LunarItem, LunarItemCount.Value);
-
                 // Called every time an item is given
                 // If the item is not a starter item, remove it and give the starter item
-                Inventory.onServerItemGiven += (inv, itemIndex, count) =>
-                {
-                    ItemDef starterItemToCompare = ItemFromTier(ItemCatalog.GetItemDef(itemIndex).tier);
+                Inventory.onServerItemGiven += ConvertPotentialItems;
+            }
+            // Else, if our artifact isn't enabled
+            else
+            {
+                // Unsubscribe from the event if the artifact is disabled
+                Inventory.onServerItemGiven -= ConvertPotentialItems;
+                return;
+            }
 
-                    // If they are different items
-                    if (starterItemToCompare != null && starterItemToCompare.itemIndex != itemIndex)
-                    {
-                        int itemCount = inv.GetItemCount(itemIndex);
+            // Set starting items
+            CommonItem = RandomItem(ItemTier.Tier1);
+            UncommonItem = RandomItem(ItemTier.Tier2);
+            LegendaryItem = RandomItem(ItemTier.Tier3);
+            BossItem = RandomItem(ItemTier.Boss);
+            LunarItem = RandomItem(ItemTier.Lunar);
 
-                        inv.RemoveItem(itemIndex, itemCount);
-                        inv.GiveItem(starterItemToCompare, itemCount);
-                    }
-                };
+            // Give the starting items to every palyer
+            for (int i = 0; i < CharacterMaster.readOnlyInstancesList.Count; i++)
+            {
+                CharacterMaster character = CharacterMaster.readOnlyInstancesList[i];
+
+                character.inventory.GiveItem(CommonItem, CommonItemCount.Value);
+                character.inventory.GiveItem(UncommonItem, UncommonItemCount.Value);
+                character.inventory.GiveItem(LegendaryItem, LegendaryItemCount.Value);
+                character.inventory.GiveItem(BossItem, BossItemCount.Value);
+                character.inventory.GiveItem(LunarItem, LunarItemCount.Value);
             }
         }
     }

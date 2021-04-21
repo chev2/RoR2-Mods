@@ -1,3 +1,7 @@
+1.0.2 --
+- Artifact should now apply to all connected players
+- Fixed a bug where the artifact would still attempt to convert items when the artifact is disabled after a run
+
 1.0.1 --
 - Fixed an error in RandomItem() preventing starting items from properly spawning
 
