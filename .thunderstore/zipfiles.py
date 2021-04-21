@@ -1,6 +1,10 @@
 import os
 import zipfile
 
+# zipfiles.py
+# Takes all folders in the .thunderstore/ folder and puts them into .zip files
+# Essentially prepares mods for uploading to Thunderstore
+
 def zipfiles(z_obj, dir):
     for root, dirs, files in os.walk(dir):
         for file in files:
