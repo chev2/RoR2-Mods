@@ -1,5 +1,9 @@
 # RoR2-Mods
-Risk of Rain 2 Mods. Tested and working with Risk of Rain 2 1.0.
+My mods for Risk of Rain 2.
+
+> [!WARNING]
+> These mods are deprecated and won't work on the latest version of the game.
+> They're in the process of being updated.
 
 ## Mods
 
